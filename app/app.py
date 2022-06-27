@@ -53,8 +53,7 @@ def randomSequence():
     If the `requestId` received already exists, this response will have empty
     fields except for the `sequenceId`.
     {
-        'date': '',
-        'datesAccessed': [''],
+        'dateProcessed': '',
         'randomSequence': [float],
         'request': {
             'requestId': '',
@@ -67,8 +66,7 @@ def randomSequence():
     """
 
     response = {
-        'date': '',
-        'datesAccessed': [],
+        'dateProcessed': '',
         'randomSequence': [],
         'request': {
             'requestId': '',
@@ -86,7 +84,6 @@ def randomSequence():
     # TODO: input sanitization
 
     # If the requestId exists, return the sequenceId to the user
-    # TODO: Log to db that this requestId was accessed
     if requestId in req2seq:
         response['sequenceId'] = req2seq[requestId]
         return response
@@ -94,7 +91,7 @@ def randomSequence():
     # If the requestId doesn't exist, return sequence of numbers and metadata
     # TODO: randomly generate sequenceId
     # TODO: more metadata
-    response['date'] = str(datetime.datetime.now())
+    response['dateProcessed'] = str(datetime.datetime.now())
     for _ in range(int(sequenceLength)):
         response['randomSequence'].append(randomFloat())
     response['request']['requestId'] = requestId
@@ -115,23 +112,51 @@ def randomSequence():
     # Send response to user
     return response
 
+@app.route('/api/retrieveSequence', methods=['POST'])
+def retrieveSequence():
+    """Given a sequenceId, show the sequence and original request & reponse.
 
-"""
-/api/retrieveSequence
+    Params:
+    * sequenceId:   alphanumeric-only string to identify the original request
 
-Request:
-- sequenceID
+    Response:
+    If the `sequenceId` received does not exist this response will have empty
+    fields.
+    {
+        'dateProcessed': '',
+        'randomSequence': [float],
+        'request': {
+            'requestId': '',
+            'sequenceLength': '',
+            'tag': ''
+        },
+        'sequenceId': ''
+    }
 
-Response:
-- original request
-    - how many numbers
-    - tag
-    - requestID
-- original response
-    - sequence of numbers
-    - date
-    - time
-    - tag
-    - sequenceID
-    - metadata
-"""
+    """
+
+    response = {
+        'dateProcessed': '',
+        'randomSequence': [],
+        'request': {
+            'requestId': '',
+            'sequenceLength': '',
+            'tag': ''
+        },
+        'sequenceId': ''
+    }
+
+    # Parse Arguments
+    sequenceId = flask.request.args['sequenceId']
+    
+    # TODO: input sanitization
+
+    # sequenceId does not exist in the database
+    if not os.path.exists('./db/' + sequenceId + '.json'):
+        return response
+
+    # Retrieve the original request
+    with open('./db/' + sequenceId + '.json', 'r') as f:
+        response = json.load(f)
+    return response
+
