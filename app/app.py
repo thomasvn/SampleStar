@@ -3,6 +3,7 @@ import flask
 import os
 import json
 import random
+import string
 import datetime
 
 ################################################################################
@@ -23,14 +24,26 @@ app = flask.Flask(__name__)
 ################################################################################
 
 def randomFloat():
-    """STUB FUNCTION. It currently generates a pseudo-random float.
+    """Stub function that generates a pseudo-random float.
 
     It will eventually be replaced by a query to the hardware device which can
-    generate genuinely random numbers
+    generate genuinely random numbers.
 
     """
 
     return random.random()
+
+def genSeqId():
+    """Generate a pseudo-random id to associate with this generated sequence.
+    """
+    x = ''.join(random.choices(string.ascii_letters + string.digits, k=16))
+    seq_id = 'seq_' + x
+
+    # If this seq_id already exists in db, try generating another seq_id
+    if os.path.exists('./db/' + seq_id + '.json'):
+        return(genSeqId())
+
+    return seq_id
 
 ################################################################################
 # ROUTES
@@ -45,9 +58,10 @@ def randomSequence():
     """Request a new sequence of random numbers or an existing `sequenceId`.
 
     Params:
-    * requestId:        alphanumeric-only string to identify the request
+    * requestId:        string (alphanumerics and "_") to identify the request
     * sequenceLength:   requested amount of random numbers returned
-    * tag:              a tag/description of this request
+    * tag:              string (alphanumerics and "_") with tag/description of 
+                        this request
 
     Response:
     If the `requestId` received already exists, this response will have empty
@@ -62,6 +76,9 @@ def randomSequence():
         },
         'sequenceId': ''
     }
+
+    200: Ok
+    400: Bad Request. Invalid input
 
     """
 
@@ -81,7 +98,13 @@ def randomSequence():
     sequenceLength = flask.request.args['sequenceLength']
     tag = flask.request.args['tag']
 
-    # TODO: input sanitization
+    # Input sanitization
+    if not requestId.isidentifier():
+        return 'requestId is not an identifier (alphanumerics and _)', 400
+    if not sequenceLength.isdigit():
+        return 'sequenceLength is not a valid digit', 400
+    if not tag.isidentifier():
+        return 'tag is not an identifier (alphanumerics and _)', 400
 
     # If the requestId exists, return the sequenceId to the user
     if requestId in req2seq:
@@ -89,7 +112,6 @@ def randomSequence():
         return response
 
     # If the requestId doesn't exist, return sequence of numbers and metadata
-    # TODO: randomly generate sequenceId
     # TODO: more metadata
     response['dateProcessed'] = str(datetime.datetime.now())
     for _ in range(int(sequenceLength)):
@@ -97,7 +119,7 @@ def randomSequence():
     response['request']['requestId'] = requestId
     response['request']['sequenceLength'] = sequenceLength
     response['request']['tag'] = tag
-    response['sequenceId'] = sequenceId = 'ss_seq_12345'
+    response['sequenceId'] = sequenceId = genSeqId()
 
     # Update our req2seq lookup dict
     req2seq[requestId] = sequenceId
@@ -117,11 +139,10 @@ def retrieveSequence():
     """Given a sequenceId, show the sequence and original request & reponse.
 
     Params:
-    * sequenceId:   alphanumeric-only string to identify the original request
+    * sequenceId:   string (alphanumerics and "_") to identify the original
+                    request
 
     Response:
-    If the `sequenceId` received does not exist this response will have empty
-    fields.
     {
         'dateProcessed': '',
         'randomSequence': [float],
@@ -132,6 +153,10 @@ def retrieveSequence():
         },
         'sequenceId': ''
     }
+
+    200: Ok
+    400: Bad Request. Invalid Input
+    404: Not Found. Requested resource (`sequenceId`) doesn't exist
 
     """
 
@@ -149,14 +174,15 @@ def retrieveSequence():
     # Parse Arguments
     sequenceId = flask.request.args['sequenceId']
     
-    # TODO: input sanitization
+    # Input sanitization
+    if not sequenceId.isidentifier():
+        return 'sequenceId is not an identifier (alphanumerics and _)', 400
 
     # sequenceId does not exist in the database
     if not os.path.exists('./db/' + sequenceId + '.json'):
-        return response
+        return 'requested sequenceId does not exist', 404
 
     # Retrieve the original request
     with open('./db/' + sequenceId + '.json', 'r') as f:
         response = json.load(f)
     return response
-

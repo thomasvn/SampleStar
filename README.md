@@ -3,7 +3,7 @@
 An internet-accessible API for you to request genuinely random numbers.
 
 This service is backed by hardware devices that use a sample of radioactive material.
-This underlying physics of the radioactivity models true randomness (unlike [pseudorandomness](https://en.wikipedia.org/wiki/Pseudorandomness)).
+The underlying physics of the radioactive material models true randomness (unlike [pseudorandomness](https://en.wikipedia.org/wiki/Pseudorandomness)).
 
 ## Usage
 
@@ -37,15 +37,13 @@ FURTHER CONSIDERATION:
 
 <!--
 TODO:
-- STUB APP (generate pseudo-random numbers)
-  - input sanitization
-  - containerize this stub and make API requests to this stub
-  - describe how this stub automatically query from the hardware device (ASSUMPTION) ??
 - DOCUMENTATION
   - Generate the documentation from the flask app??
   - API
   - DATABASE STRUCTURE
 - PRODUCTION DEPLOY
+  - What is best way to deploy an API ?
+  - Containerize ?
   - This should not use `flask run`. May require a legitimate HTTP server
   - https://flask.palletsprojects.com/en/2.1.x/deploying/
   - https://www.fullstackpython.com/wsgi-servers.html
@@ -61,6 +59,7 @@ TODO:
   - how long should IDs be made available for?
 
 FUTURE:
+- Describe how the program will query the hardware device ??
 - how do we scale? do we put our hardware device in datacenters across the globe? or do we accept we will always be constrained by internet latency?
 -->
 
@@ -71,4 +70,5 @@ DONE:
 - Begin coding the API in Flask (python). This will act as a "stub" since it can only generate pseudo-random numbers.
 - Flat file database setup
 - Code for both "/api/randomSequence" and "/api/retrieveSequence".
+- Input validation and error codes
 -->

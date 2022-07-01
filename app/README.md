@@ -23,6 +23,52 @@ export FLASK_ENV=development
 flask run
 ```
 
+## Testing the API
+
+```bash
+# Request a new sequence of random numbers or an existing `sequenceId`.
+# 
+# Params:
+# * requestId:        alphanumeric-only string to identify the request
+# * sequenceLength:   requested amount of random numbers returned
+# * tag:              a tag/description of this request
+# 
+# Response:
+# If the `requestId` received already exists, this response will have empty
+# fields except for the `sequenceId`.
+# {
+#     'dateProcessed': '',
+#     'randomSequence': [float],
+#     'request': {
+#         'requestId': '',
+#         'sequenceLength': '',
+#         'tag': ''
+#     },
+#     'sequenceId': ''
+# }
+curl --location --request POST 'http://localhost:5000/api/randomSequence?requestId=req_0&sequenceLength=6&tag=thomasvn'
+
+# Given a sequenceId, show the sequence and original request & reponse.
+# 
+# Params:
+# * sequenceId:   alphanumeric-only string to identify the original request
+# 
+# Response:
+# If the `sequenceId` received does not exist this response will have empty
+# fields.
+# {
+#     'dateProcessed': '',
+#     'randomSequence': [float],
+#     'request': {
+#         'requestId': '',
+#         'sequenceLength': '',
+#         'tag': ''
+#     },
+#     'sequenceId': ''
+# }
+curl --location --request POST 'http://localhost:5000/api/retrieveSequence?sequenceId=ss_seq_1234'
+```
+
 ## Container Setup
 
 ## References
