@@ -35,6 +35,7 @@ Option 1: AWS Elastic Beanstalk
 - Pros:
   - quickly provision all necessary AWS resources (given time constraints)
   - later, save state of all provisioned resources into terraform
+  - ec2 instances, load balancers, autoscaling groups
 - Cons:
   - flexibility
 

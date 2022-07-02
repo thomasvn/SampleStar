@@ -10,14 +10,17 @@ import datetime
 # SETUP
 ################################################################################
 
+# Create the db directory if it doesn't exist
+if not os.path.exists('./db/'):
+    os.mkdir('./db')
+
 # If the req2seq dictionary exists in the flat-file database, load it into memory
 req2seq = {}
 if os.path.exists('./db/requestId_to_sequenceId.json'):
     with open('./db/requestId_to_sequenceId.json', 'r') as f:
         req2seq = json.load(f)
 
-# Start Flask app
-app = flask.Flask(__name__)
+application = flask.Flask(__name__)
 
 ################################################################################
 # HELPER FUNCTIONS
@@ -49,11 +52,11 @@ def genSeqId():
 # ROUTES
 ################################################################################
 
-@app.route('/')
+@application.route('/')
 def hello():
     return 'Welcome to SampleStar!'
 
-@app.route('/api/randomSequence', methods=['POST'])
+@application.route('/api/randomSequence', methods=['POST'])
 def randomSequence():
     """Request a new sequence of random numbers or an existing `sequenceId`.
 
@@ -134,7 +137,7 @@ def randomSequence():
     # Send response to user
     return response
 
-@app.route('/api/retrieveSequence', methods=['POST'])
+@application.route('/api/retrieveSequence', methods=['POST'])
 def retrieveSequence():
     """Given a sequenceId, show the sequence and original request & reponse.
 
@@ -186,3 +189,10 @@ def retrieveSequence():
     with open('./db/' + sequenceId + '.json', 'r') as f:
         response = json.load(f)
     return response
+
+################################################################################
+# RUN
+################################################################################
+if __name__ == "__main__":
+    application.debug = False
+    application.run()

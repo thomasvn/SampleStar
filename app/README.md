@@ -72,13 +72,24 @@ curl --location --request POST 'http://localhost:5000/api/retrieveSequence?seque
 ## Initial Deploy to AWS Elastic Beanstalk
 
 ```bash
+# Install
 brew install awsebcli
 
+# Initialize
 pip freeze > requirements.txt
-
 eb init -p python-3.8 sample-star --region us-west-1
 eb init
+
+# Create environment from this directory
 eb create sample-start-env
+```
+
+```bash
+# Redeploy new source code
+eb deploy
+
+# Terminate the environment
+eb terminate
 ```
 
 ## References
