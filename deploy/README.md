@@ -1,61 +1,32 @@
 # Deploy
 
-## Deployment Considerations
+We chose AWS Elastic Beanstalk as our method of deployment because of its (1) speed, (2) low complexity, and (3) high availability features.
+To learn more about all the deployment options we considered, refer to the [CONSIDERATIONS.md](./CONSIDERATIONS.md) document
 
-Requirements:
+## Setup
 
-- Eight-nines availability (0.3s downtime per year). This service will be used by some high-visibility, and very prestigious games
+```bash
+# Install
+brew install awsebcli
 
-**Idea 1** (Winner):
+# Initialize app in Elastic BeanStalk
+pip freeze > requirements.txt
+eb init sample-star -p python-3.8 --region us-west-1
+eb init
+```
 
-- Deploy API app to a public cloud service. App makes network requests over the internet to our innovative hardware
-- Optimize for availability
-- Sacrifice speed (latency between public cloud app and our special hardware)
+## Deploy app to new environment
 
-Idea 2:
+```bash
+# Create environment from app
+# -v :              verbosity
+# --min-instances : min # instances at any point in time
+# --max-instances : max # instances at any point in time
+eb create sample-star-env -v --min-instances 4 --max-instances 8
 
-- Deploy API app in a private datacenter. Co-located with our innovative hardware
-- Optimize for speed (low latency network requests to the special hardware)
-- Sacrifice availability (difficult to maintain your own highly available servers)
+# Redeploy new source code
+eb deploy
 
-## Cloud Services Considerations
-
-Must Haves for high availability:
-
-- App can handle failures, restarts, & reboots. Resume operation immediately after.
-- Horizontally scale app instances & load balance across instances
-- Spread app across cloud availability zones
-- Deploy app to multiple clouds
-- Use DNS to have one hostname point to the load balancers deployed across zones/clouds
-- Automation to detect outage (monitoring & alerts)
-- Automation to quickly redeploy (backups, terraform)
-
-Option 1: AWS Elastic Beanstalk
-
-- Pros:
-  - quickly provision all necessary AWS resources (given time constraints)
-  - later, save state of all provisioned resources into terraform
-  - ec2 instances, load balancers, autoscaling groups
-- Cons:
-  - flexibility
-
-Option 2: Managed Kubernetes
-
-- Pros:
-  - horizontal scaling during increased load
-- Cons:
-  - complexity of deployment/maintenance
-  - increased complexity & dependency on varying services can decrease availability
-
-<!--
-TODO:
-- Error codes if network requests from API to hardware don't work
-
--->
-
-<!--
-- https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-flask.html#python-flask-deploy
-
-- https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/high-availability/
-- https://microk8s.io/high-availability
--->
+# Terminate the environment
+eb terminate
+```

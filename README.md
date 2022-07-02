@@ -37,30 +37,25 @@ FURTHER CONSIDERATION:
 
 <!--
 TODO:
-- DOCUMENTATION
+- Database
+- Architecture Diagrams
+- Documentation
   - Generate the documentation from the flask app??
   - API
   - DATABASE STRUCTURE
-- PRODUCTION DEPLOY
-  - What is best way to deploy an API ?
-  - Containerize ?
-  - This should not use `flask run`. May require a legitimate HTTP server
-  - https://flask.palletsprojects.com/en/2.1.x/deploying/
-  - https://www.fullstackpython.com/wsgi-servers.html
-- AVAILABILITY ?
+
+FUTURE:
+- Availability
   - Deploy to multiple regions?
   - DNS to resolve to the hosts within multiple regions?
-- KUBERNETES ?
-  - AWS EKS for demo
-  - enable horizontal scalability
-- AUTHENTICATION ?
+  - Deploy to multiple clouds?
+- Authentication ?
   - API token?
   - what if somebody tries to use an ID which already belongs to another customer?
   - how long should IDs be made available for?
-
-FUTURE:
 - Describe how the program will query the hardware device ??
 - how do we scale? do we put our hardware device in datacenters across the globe? or do we accept we will always be constrained by internet latency?
+- Error codes if network requests from API to hardware don't work
 -->
 
 <!--

@@ -2,3 +2,9 @@
 .venv
 db
 __pycache__
+
+# Elastic Beanstalk Files
+.ebignore
+.elasticbeanstalk
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
