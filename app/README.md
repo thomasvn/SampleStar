@@ -69,7 +69,17 @@ curl --location --request POST 'http://localhost:5000/api/randomSequence?request
 curl --location --request POST 'http://localhost:5000/api/retrieveSequence?sequenceId=ss_seq_1234'
 ```
 
-## Container Setup
+## Initial Deploy to AWS Elastic Beanstalk
+
+```bash
+brew install awsebcli
+
+pip freeze > requirements.txt
+
+eb init -p python-3.8 sample-star --region us-west-1
+eb init
+eb create sample-start-env
+```
 
 ## References
 
