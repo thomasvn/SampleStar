@@ -1,7 +1,9 @@
 # Deploy
 
-We chose AWS Elastic Beanstalk as our method of deployment because of its (1) speed, (2) low complexity, and (3) high availability features.
+We chose AWS Elastic Beanstalk as our method of deployment because of its (1) speed of provisioning all necessary resources, (2) low complexity, and (3) high availability features.
 To learn more about all the deployment options we considered, refer to the [CONSIDERATIONS.md](./CONSIDERATIONS.md) document
+
+![SampleStar-Architecture.png](./SampleStar-Architecture.png)
 
 ## Setup
 

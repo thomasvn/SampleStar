@@ -3,15 +3,28 @@
 An internet-accessible API for you to request genuinely random numbers.
 
 This service is backed by hardware devices that use a sample of radioactive material.
-The underlying physics of the radioactive material models true randomness (unlike [pseudorandomness](https://en.wikipedia.org/wiki/Pseudorandomness)).
+The underlying physics of the radioactive material model true randomness (unlike [pseudorandomness](https://en.wikipedia.org/wiki/Pseudorandomness)).
 
 ## Usage
 
 These genuinely random numbers can be queried from our service over internet api.
 
 ```bash
-curl -k -X GET http://nuclear-unicorns.kubernetes.aws.com
-    -d '{}'
+# Request a randomSequence
+# 
+# Params:
+# * requestId:        string (alphanumerics and "_") to identify the request
+# * sequenceLength:   requested amount of random numbers returned
+# * tag:              string (alphanumerics and "_") with tag/description of
+#                     this request
+curl --location --request POST 'http://samplestar.thomasvn.dev/api/randomSequence?requestId=req_3&sequenceLength=3&tag=thomasvn'
+
+# Query for a previously generated randomSequence
+# 
+# Params:
+# * sequenceId:   string (alphanumerics and "_") to identify the original
+#                 request
+curl --location --request POST 'http://samplestar.thomasvn.dev/api/retrieveSequence?sequenceId=seq_zGTVFHjUy2PpVVRq'
 ```
 
 <!--
@@ -37,8 +50,6 @@ FURTHER CONSIDERATION:
 
 <!--
 TODO:
-- Database
-- Architecture Diagrams
 - Documentation
   - Generate the documentation from the flask app??
   - API
@@ -71,4 +82,7 @@ DONE:
 - Flat file database setup
 - Code for both "/api/randomSequence" and "/api/retrieveSequence".
 - Input validation and error codes
+- Successfully deploy to Elastic Beanstalk
+- Elastic FileSystem acting as database
+- Architecture Diagrams
 -->
