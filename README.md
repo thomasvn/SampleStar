@@ -7,8 +7,6 @@ The underlying physics of the radioactive material model true randomness (unlike
 
 ## Usage
 
-These genuinely random numbers can be queried from our service over internet api.
-
 ```bash
 # Request a randomSequence
 # 
@@ -17,14 +15,24 @@ These genuinely random numbers can be queried from our service over internet api
 # * sequenceLength:   requested amount of random numbers returned
 # * tag:              string (alphanumerics and "_") with tag/description of
 #                     this request
-curl --location --request POST 'http://samplestar.thomasvn.dev/api/randomSequence?requestId=req_3&sequenceLength=3&tag=thomasvn'
+curl --location --request POST 'http://samplestar.thomasvn.dev/api/randomSequence' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "requestId" : "req_3",
+    "sequenceLength": "3",
+    "tag": "thomasvn"
+}'
 
 # Query for a previously generated randomSequence
 # 
 # Params:
 # * sequenceId:   string (alphanumerics and "_") to identify the original
 #                 request
-curl --location --request POST 'http://samplestar.thomasvn.dev/api/retrieveSequence?sequenceId=seq_zGTVFHjUy2PpVVRq'
+curl --location --request POST 'http://samplestar.thomasvn.dev/api/retrieveSequence' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "sequenceId": "seq_FsE2h1RJ04NHrN5N"
+}'
 ```
 
 <!--

@@ -14,11 +14,8 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip3 install flask
 
-# Create directory for flat-file database
-mkdir db
-
 # Build & run
-export FLASK_APP=app.py
+export FLASK_APP=application.py
 export FLASK_ENV=development
 flask run
 ```
@@ -29,10 +26,20 @@ For more details, visit the [API Doc](../doc/API.md)
 
 ```bash
 # Request a randomSequence
-curl --location --request POST 'http://localhost:5000/api/randomSequence?requestId=req_0&sequenceLength=6&tag=thomasvn'
+curl --location --request POST 'http://localhost:5000/api/randomSequence' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "requestId" : "req_3",
+    "sequenceLength": "3",
+    "tag": "thomasvn"
+}'
 
 # Query for a previously generated randomSequence
-curl --location --request POST 'http://localhost:5000/api/retrieveSequence?sequenceId=ss_seq_1234'
+curl --location --request POST 'http://localhost:5000/api/retrieveSequence' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "sequenceId": "seq_FsE2h1RJ04NHrN5N"
+}'
 ```
 
 ## References

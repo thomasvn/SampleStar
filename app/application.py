@@ -1,3 +1,4 @@
+from http import client
 import flask
 
 import os
@@ -103,9 +104,14 @@ def randomSequence():
     }
 
     # Parse Arguments
-    requestId = flask.request.args['requestId']
-    sequenceLength = flask.request.args['sequenceLength']
-    tag = flask.request.args['tag']
+    clientRequest = flask.request.json
+    requiredInputs = ['requestId', 'sequenceLength', 'tag']
+    for r in requiredInputs:
+        if r not in clientRequest:
+            return 'Required input \'' + r + '\' was missing from request', 400
+    requestId = clientRequest['requestId']
+    sequenceLength = clientRequest['sequenceLength']
+    tag = clientRequest['tag']
 
     # Input sanitization
     if not requestId.isidentifier():
@@ -183,7 +189,12 @@ def retrieveSequence():
     }
 
     # Parse Arguments
-    sequenceId = flask.request.args['sequenceId']
+    clientRequest = flask.request.json
+    requiredInputs = ['sequenceId']
+    for r in requiredInputs:
+        if r not in clientRequest:
+            return 'Required input \'' + r + '\' was missing from request', 400
+    sequenceId = clientRequest['sequenceId']
     
     # Input sanitization
     if not sequenceId.isidentifier():

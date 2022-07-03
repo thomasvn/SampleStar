@@ -3,7 +3,9 @@
 We chose AWS Elastic Beanstalk as our method of deployment because of its (1) speed of provisioning all necessary resources, (2) low complexity, and (3) high availability features.
 To learn more about all the deployment options we considered, refer to the [CONSIDERATIONS.md](./CONSIDERATIONS.md) document
 
-![SampleStar-Architecture.png](./SampleStar-Architecture.png)
+<img src="./SampleStar-Architecture.png" alt="SampleStar Architecture" width="500"/>
+
+<!-- ![SampleStar-Architecture.png](./SampleStar-Architecture.png) -->
 
 ## Setup
 
@@ -21,13 +23,13 @@ eb init
 
 ```bash
 # Create environment from app
-# -v :              verbosity
-# --min-instances : min # instances at any point in time
-# --max-instances : max # instances at any point in time
 eb create sample-star-env -v --min-instances 4 --max-instances 8
 
 # Redeploy new source code
 eb deploy
+
+# Adjust the number of running instances
+eb scale 2 sample-star-env
 
 # Terminate the environment
 eb terminate
