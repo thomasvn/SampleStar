@@ -1,9 +1,9 @@
 # Deploy
 
-We chose AWS Elastic Beanstalk as our method of deployment because of its (1) speed of provisioning all necessary resources, (2) low complexity, and (3) high availability features.
+We chose AWS Elastic Beanstalk as our method of deployment because of its (1) low complexity, (2) high availability features, and (3) ease of use under time constraints.
 To learn more about all the deployment options we considered, refer to the [CONSIDERATIONS.md](./CONSIDERATIONS.md) document
 
-<img src="./SampleStar-Architecture.png" alt="SampleStar Architecture" width="500"/>
+<img src="./SampleStar-Architecture.png" alt="SampleStar Architecture" width="700" style="display:block; margin-left:auto; margin-right:auto"/>
 
 <!-- ![SampleStar-Architecture.png](./SampleStar-Architecture.png) -->
 
@@ -16,10 +16,9 @@ brew install awsebcli
 # Initialize app in Elastic BeanStalk
 pip freeze > requirements.txt
 eb init sample-star -p python-3.8 --region us-west-1
-eb init
 ```
 
-## Deploy app to new environment
+## Deploy app
 
 ```bash
 # Create environment from app

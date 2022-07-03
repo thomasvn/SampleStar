@@ -1,10 +1,12 @@
-# Deploy
-
-## Deployment Considerations
+# Deployment Considerations
 
 Requirements:
 
 - Eight-nines availability (0.3s downtime per year). This service will be used by some high-visibility, and very prestigious games
+
+Constraints:
+
+- 
 
 **Idea 1** (Winner):
 
@@ -30,7 +32,7 @@ Must Haves for high availability:
 - Automation to detect outage (monitoring & alerts)
 - Automation to quickly redeploy (backups, terraform)
 
-**Option 1** (Winner): AWS Elastic Beanstalk
+**Idea 1** (Winner): AWS Elastic Beanstalk
 
 - Pros:
   - quickly provision all necessary AWS resources (given time constraints)
@@ -46,7 +48,7 @@ Must Haves for high availability:
   - repeatability
   - only provides high-order functionality (future difficulty when our use case becomes more complex)
 
-Option 2: Managed Kubernetes
+Idea 2: Managed Kubernetes
 
 - Pros:
   - horizontal scaling during increased load

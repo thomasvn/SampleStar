@@ -1,12 +1,17 @@
 # SampleStar Application Stub
 
 NOTE.
-This code is a temporary stub in place of the real application.
-Our developers are hard at work building an application to query our innovative hardware device with near-zero latency.
+This code is a temporary stub.
+Our developers are hard at work building the real application which queries our innovative hardware device with near-zero latency.
 
-This code is a Flask App that provides the same API specifications as the real application, but only serves pseudo-random numbers to the users.
+This stub will provide the same [API specifications](../doc/API.md) as the real app.
+However this stub only generates pseudo-random numbers.
 
-## Local Setup
+The API handlers were built using Flask App (python).
+The database is currently a shared filesystem where each worker will read/write to this filesystem.
+Gunicorn on Nginx is used as the web server.
+
+## Run this app locally
 
 ```bash
 # Setup tooling
@@ -25,7 +30,7 @@ flask run
 For more details, visit the [API Doc](../doc/API.md)
 
 ```bash
-# Request a randomSequence
+# Request a sequence of random numbers
 curl --location --request POST 'http://localhost:5000/api/randomSequence' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -34,7 +39,7 @@ curl --location --request POST 'http://localhost:5000/api/randomSequence' \
     "tag": "thomasvn"
 }'
 
-# Query for a previously generated randomSequence
+# Query for a previously generated sequence
 curl --location --request POST 'http://localhost:5000/api/retrieveSequence' \
 --header 'Content-Type: application/json' \
 --data-raw '{
