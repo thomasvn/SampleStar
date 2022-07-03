@@ -44,6 +44,7 @@ Must Haves for high availability:
 - Cons:
   - flexibility
   - repeatability
+  - only provides high-order functionality (future difficulty when our use case becomes more complex)
 
 Option 2: Managed Kubernetes
 

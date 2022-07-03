@@ -30,3 +30,7 @@ eb deploy
 # Terminate the environment
 eb terminate
 ```
+
+## References
+
+- <https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/services-efs.html>

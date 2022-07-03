@@ -4,7 +4,7 @@ db
 __pycache__
 
 # Elastic Beanstalk Files
-.ebignore
+.ebignore*
 .elasticbeanstalk
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
