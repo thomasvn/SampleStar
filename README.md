@@ -49,6 +49,7 @@ curl --location --request POST 'http://samplestar.thomasvn.dev/api/retrieveSeque
 - logic to generate/store/validate authentication tokens for paying customers
 - upgrade from flat-file database to relational database
 - safety guarantees when multiple instances are reading/writing to the same record
+- improved monitoring & alerting automation
 - deploy app to multiple regions, then multiple clouds
 - use DNS to round-robin between all deployments
 
