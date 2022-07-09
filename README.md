@@ -31,7 +31,7 @@ curl --location --request POST 'http://samplestar.thomasvn.dev/api/randomSequenc
 curl --location --request POST 'http://samplestar.thomasvn.dev/api/retrieveSequence' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "sequenceId": "seq_FsE2h1RJ04NHrN5N"
+    "sequenceId": "seq_zGTVFHjUy2PpVVRq"
 }'
 ```
 
